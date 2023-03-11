@@ -4,14 +4,14 @@
 //SoftwareSerial BTSerial(10, 11); // RX | TX
 //int state = 0;
  
-void setup() {/*
+void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(9, OUTPUT);
   digitalWrite(9, HIGH);
 
   Serial.begin(38400);
   Serial.println("Enter AT Commands:");
-  BTSerial.begin(38400);*/
+  BTSerial.begin(38400);
 }
  
 void loop() {
