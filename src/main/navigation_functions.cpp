@@ -1,42 +1,47 @@
 #include "navigation_functions.h"
 
-void navigation_setup(const int leften, const int leftin1, 
-                      const int leftin2, const int righten, 
-                      const int rightin1, const int rightin2){
-  pinMode(leften, OUTPUT);
-	pinMode(righten, OUTPUT);
-	pinMode(leftin1, OUTPUT);
-	pinMode(leftin2, OUTPUT);
-	pinMode(rightin1, OUTPUT);
-	pinMode(rightin2, OUTPUT);
-  digitalWrite(leftin1, LOW);
-	digitalWrite(leftin2, LOW);
-	digitalWrite(rightin1, LOW);
-	digitalWrite(rightin2, LOW);
+void navigation_setup(){
+  pinMode(en_l, OUTPUT);
+	pinMode(en_r, OUTPUT);
+	pinMode(in1_l, OUTPUT);
+	pinMode(in2_l, OUTPUT);
+	pinMode(in1_r, OUTPUT);
+	pinMode(in2_r, OUTPUT);
+  digitalWrite(in1_l, LOW);
+	digitalWrite(in2_l, LOW);
+	digitalWrite(in1_r, LOW);
+	digitalWrite(in2_r, LOW);
 }
 
-void turn_left(float radians){
-
-}
-
-void turn_right(float radians){
+void turn_left(){
 
 }
 
-void drive_fowards(){
-  analogWrite(leften, 255);
-  analogWrite(righten, 255);
-	digitalWrite(leftin1, HIGH);
-	digitalWrite(leftin2, LOW);
-	digitalWrite(rightin1, HIGH);
-	digitalWrite(rightin2, LOW);
+void turn_right(){
+
+}
+
+void drive_forwards(){
+  analogWrite(en_l, 255);
+  analogWrite(en_r, 255);
+	digitalWrite(in1_l, HIGH);
+	digitalWrite(in2_l, LOW);
+	digitalWrite(in1_r, HIGH);
+	digitalWrite(in2_r, LOW);
 }
 
 void drive_backwards(){
-  analogWrite(leften, 255);
-  analogWrite(righten, 255);
-	digitalWrite(leftin1, HIGH);
-	digitalWrite(leftin2, LOW);
-	digitalWrite(rightin1, HIGH);
-	digitalWrite(rightin2, LOW);
+  analogWrite(en_l, 255);
+  analogWrite(en_r, 255);
+	digitalWrite(in1_l, LOW);
+	digitalWrite(in2_l, HIGH);
+	digitalWrite(in1_r, LOW);
+	digitalWrite(in2_r, HIGH);
+}
+
+void halt(){
+  digitalWrite(in1_l, LOW);
+	digitalWrite(in2_l, LOW);
+	digitalWrite(in1_r, LOW);
+	digitalWrite(in2_r, LOW);
 }
