@@ -1,11 +1,11 @@
 /*job queue header*/
-
-char jobs[20] = {'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z'};
-int job_index = 0;
-const int job_size = 20;
+#ifndef JOB_QUEUE_H
+#define JOB_QUEUE_H
 
 void push(char task);
 
 char pop();
 
 void restructure();
+
+#endif

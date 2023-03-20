@@ -1,7 +1,8 @@
 #include "job_queue.h"
+#include "globals.h"
 
 void push(char task){
-  if (job_index >= 20){
+  if (job_index >= job_size){
     return;
   }
   jobs[job_index] = task;
@@ -11,6 +12,7 @@ void push(char task){
 char pop(){
   char task = jobs[0];
   restructure();
+  job_index--;
   return task;
 }
 

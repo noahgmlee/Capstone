@@ -1,6 +1,5 @@
 /*bluetooth functions*/
 #include "bt_functions.h"
-#include "Arduino.h"
 
 #include <SoftwareSerial.h>
 
@@ -14,21 +13,33 @@ void setup_BT(){
   BTSerial.begin(9600);
 }
 
-bool read_BT(){
-  int state = 0;
+void read_and_add_BT(){
+  char state = 'z';
   if(BTSerial.available() > 0){
     state = BTSerial.read();
+    delay(2000);
+    BTSerial.flush();
     digitalWrite(LED_BUILTIN, HIGH);
+    if (state == 'a' || state == 'b'){
+      if (state != jobs[0]) {
+        push(state);
+      }
+    } 
   }
-  else{
-    digitalWrite(LED_BUILTIN, LOW);
+  delay(2000);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(2000);
+}
+
+bool read_BT(char desk){
+  char state = 'z';
+  if(BTSerial.available() > 0){
+    state = BTSerial.read();
+    if (state == desk){
+      BTSerial.flush();
+      return true;
+    }
   }
-  if (state == 'a'){
-    digitalWrite(LED_BUILTIN, HIGH);
-    return true;
-  }
-  else {
-    digitalWrite(LED_BUILTIN, LOW);
-  }
+  BTSerial.flush();
   return false;
 }
