@@ -2,9 +2,9 @@
 #ifndef JOB_QUEUE_H
 #define JOB_QUEUE_H
 
-void push(char task);
+void push(int task);
 
-char pop();
+int pop();
 
 void restructure();
 

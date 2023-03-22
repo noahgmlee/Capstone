@@ -10,6 +10,6 @@ void setup_BT();
 
 void read_and_add_BT();
 
-bool read_BT(char desk);
+bool read_BT(int desk);
 
 #endif

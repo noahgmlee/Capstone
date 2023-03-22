@@ -3,7 +3,7 @@
 
 #include <SoftwareSerial.h>
 
-SoftwareSerial BTSerial(10, 11);   // RX | TX
+SoftwareSerial BTSerial(12, 11);   // RX | TX
 
 void setup_BT(){
   pinMode(LED_BUILTIN, OUTPUT);
@@ -14,32 +14,42 @@ void setup_BT(){
 }
 
 void read_and_add_BT(){
-  char state = 'z';
+  int state = 0;
   if(BTSerial.available() > 0){
-    state = BTSerial.read();
-    delay(2000);
-    BTSerial.flush();
+    delay(1000);
+    state = BTSerial.available();
+    while (BTSerial.available() > 0){
+      BTSerial.read();
+    }
+    Serial.print("Bluetooth read is: ");
+    Serial.print(state);
+    Serial.print("\n");
     digitalWrite(LED_BUILTIN, HIGH);
-    if (state == 'a' || state == 'b'){
+    Serial.print("next job: ");
+    Serial.print(jobs[0]);
+    Serial.print("\n");
+    if ((state == 1) || (state == 6)){
       if (state != jobs[0]) {
         push(state);
       }
     } 
   }
-  delay(2000);
+  delay(1000);
   digitalWrite(LED_BUILTIN, LOW);
-  delay(2000);
+  delay(500);
 }
 
-bool read_BT(char desk){
-  char state = 'z';
+bool read_BT(int desk){
+  int state = 0;
   if(BTSerial.available() > 0){
-    state = BTSerial.read();
+    delay(1000);
+    state = BTSerial.available();
+    while (BTSerial.available() > 0){
+      BTSerial.read();
+    }
     if (state == desk){
-      BTSerial.flush();
       return true;
     }
   }
-  BTSerial.flush();
   return false;
 }

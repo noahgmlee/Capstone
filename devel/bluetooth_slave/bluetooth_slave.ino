@@ -1,36 +1,32 @@
 
 #include <SoftwareSerial.h>
 
-SoftwareSerial BTSerial(10, 11); // RX | TX
-int state = 0;
+SoftwareSerial BTSerial(12, 11); // RX | TX
+int bytes = 0;
  
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(9, OUTPUT);
   digitalWrite(9, HIGH);
 
-  Serial.begin(38400);
-  Serial.println("Enter AT Commands:");
+  Serial.begin(9600);
+  //Serial.println("Enter AT Commands:");
   BTSerial.begin(38400);
 }
  
 void loop() {
-
-  if (Serial.available())
-    BTSerial.write(Serial.read());
-
-  if (BTSerial.available())
-    Serial.write(BTSerial.read()); 
-
-  if (Serial.available() > 0)
-    state = Serial.read();
-  Serial.print(state);
-  if (state == '1') {
+  if (BTSerial.available() > 0){
+    delay(1000);
+    bytes = BTSerial.available();
+    Serial.print("bytes available: ");
+    Serial.print(bytes);
+    Serial.print("\n");
+    while (BTSerial.available() > 0){
+      BTSerial.read();
+    }
     digitalWrite(LED_BUILTIN, HIGH);
-    state = 0; 
   }
-  else if (state == '0') {
+  else {
     digitalWrite(LED_BUILTIN, LOW);
-    state = 0;
   }
 }

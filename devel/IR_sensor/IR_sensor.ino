@@ -3,7 +3,7 @@
 
 Servo myServo; 
 
-SoftwareSerial BTSerial(10, 11); // RX | TX
+SoftwareSerial BTSerial(12, 11); // RX | TX
 
 const int buttonPin1 = 2;  // the number of the pushbutton pin
 const int buttonPin2 = 3;
@@ -20,11 +20,12 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(IRPin, INPUT);
   myServo.attach(12);
-  
+  myServo.write(65);
+
 
 
   Serial.begin(9600);
-  //Serial.println("Enter AT Commands:");
+  Serial.println("Enter AT Commands:");
   BTSerial.begin(9600);
 }
  
@@ -38,6 +39,7 @@ void loop() {
     digitalWrite(LED_BUILTIN, HIGH);
     BTSerial.write('a');
     Serial.write('a');
+    myServo.write(0);
     
   } else {
     // turn LED off:
@@ -47,6 +49,8 @@ void loop() {
     // turn LED on:
     digitalWrite(LED_BUILTIN, HIGH);
     BTSerial.write('b');
+    myServo.write(65);
+
     
   } else {
     // turn LED off:
@@ -57,10 +61,9 @@ void loop() {
   Serial.print("\n");
 
 
-  /*myServo.write(0);
-  delay(2000);
-  myServo.write(65);
-  delay(2000);*/
+  //delay(2000);
+  //myServo.write(65);
+  //delay(2000);
 
   /*if(digitalRead(IRPin) == 0){
     digitalWrite(LED_BUILTIN, HIGH);
