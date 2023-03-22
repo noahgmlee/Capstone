@@ -1,7 +1,6 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-const int button = 0;
 const int en_l = 7;
 const int in1_l = 3;
 const int in2_l = 2;

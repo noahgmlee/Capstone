@@ -16,7 +16,7 @@ void setup_BT(){
 void read_and_add_BT(){
   int state = 0;
   if(BTSerial.available() > 0){
-    delay(1000);
+    delay(200);
     state = BTSerial.available();
     while (BTSerial.available() > 0){
       BTSerial.read();
@@ -42,13 +42,20 @@ void read_and_add_BT(){
 bool read_BT(int desk){
   int state = 0;
   if(BTSerial.available() > 0){
-    delay(1000);
+    delay(200);
     state = BTSerial.available();
     while (BTSerial.available() > 0){
       BTSerial.read();
     }
     if (state == desk){
       return true;
+    }
+    else {
+      if ((state == 1) || (state == 6)){
+        if (state != jobs[0]) {
+          push(state);
+        }
+      } 
     }
   }
   return false;

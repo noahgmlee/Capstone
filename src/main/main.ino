@@ -17,6 +17,7 @@ int IRState2 = 0;
 int FullState = 1;
 int buttonState = 0;
 int curr_task = 0;
+int obstacleState = 1;
 Servo myServo; 
 
 ////// SETUP /////// 
@@ -26,13 +27,13 @@ void setup() {
     pinMode(ir_pin1, INPUT);
     pinMode(ir_pin2, INPUT);
     pinMode(ir_full, INPUT);
-    pinMode(button, INPUT);
+    pinMode(A1, INPUT);
+    pinMode(A0, INPUT);
     myServo.attach(10);
     myServo.write(10);
 }
  
 ////// LOOP //////
-
 typedef enum 
 {
   IDLE,
@@ -42,10 +43,10 @@ typedef enum
 } states_t;
 
 states_t state = IDLE;
-
 void loop() {
   switch (state){
     case IDLE:
+      FullState = digitalRead(ir_full);
       if (!FullState){
         myServo.write(55);
         delay(500);
@@ -63,7 +64,7 @@ void loop() {
         delay(500);
       }
       while (!FullState){
-        buttonState = digitalRead(button);
+        buttonState = digitalRead(A1);
         FullState = buttonState;
       }
       myServo.write(10);
@@ -94,7 +95,7 @@ void loop() {
         return_from_desk(curr_task);
         state = IDLE;
       }
-      else if ((curr_task == 1) && (jobs[0] == 3)){
+      else if ((curr_task == 1) && (jobs[0] == 6)){
         go_to_desk(3);
         state = WAIT_FOR_GARBAGE;
       }
@@ -119,7 +120,12 @@ void go_to_desk(int desk){
   while (num_stops > 0) {
     IRState1 = digitalRead(ir_pin1);
     IRState2 = digitalRead(ir_pin2);
+    obstacleState = digitalRead(A0);
     while ((!IRState1) || (!IRState2)) {
+      if (!obstacleState){
+        halt();
+        delay(100);
+      }
       if (!IRState1 && !IRState2){
         drive_forwards();
         delay(1);
@@ -136,9 +142,10 @@ void go_to_desk(int desk){
       }
       IRState1 = digitalRead(ir_pin1);
       IRState2 = digitalRead(ir_pin2);
+      obstacleState = digitalRead(A0);
     }
     drive_forwards();
-    delay(50);
+    delay(75);
     halt();
     delay(50);
     num_stops--;
@@ -157,9 +164,26 @@ void return_from_desk(int desk){
     num_stops = 1;
   }
   while (num_stops > 0) {
+    if ((desk == 1) && !FullState && (num_stops == 1) && (jobs[0] == 6)){
+      halt();
+      delay(250);
+      myServo.write(55);
+      delay(500);
+      myServo.write(10);
+      delay(500);
+      myServo.write(55);
+      delay(500);
+      myServo.write(10);
+      delay(500);
+    }
     IRState1 = digitalRead(ir_pin1);
     IRState2 = digitalRead(ir_pin2);
+    obstacleState = digitalRead(A0);
     while ((!IRState1) || (!IRState2)) {
+      if (!obstacleState){
+        halt();
+        delay(100);
+      }
       if (!IRState1 && !IRState2){
         drive_forwards();
         delay(1);
@@ -176,9 +200,10 @@ void return_from_desk(int desk){
       }
       IRState1 = digitalRead(ir_pin1);
       IRState2 = digitalRead(ir_pin2);
+      obstacleState = digitalRead(A0);
     }
     drive_forwards();
-    delay(50);
+    delay(75);
     halt();
     delay(50);
     num_stops--;
@@ -187,3 +212,15 @@ void return_from_desk(int desk){
   delay(1000);
   return;
 }
+
+/*test
+void loop() {
+  buttonState = digitalRead(A1);
+  if (buttonState){
+    myServo.write(55);
+  }
+  else {
+    myServo.write(10);
+  }
+}
+*/

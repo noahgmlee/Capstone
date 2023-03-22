@@ -15,8 +15,8 @@ void navigation_setup(){
 }
 
 void turn_left(){
-  analogWrite(en_l, 170);
-  analogWrite(en_r, 170);
+  analogWrite(en_l, 200);
+  analogWrite(en_r, 200);
 	digitalWrite(in1_l, HIGH);
 	digitalWrite(in2_l, LOW);
 	digitalWrite(in1_r, LOW);
@@ -24,8 +24,8 @@ void turn_left(){
 }
 
 void turn_right(){
-  analogWrite(en_l, 170);
-  analogWrite(en_r, 170);
+  analogWrite(en_l, 200);
+  analogWrite(en_r, 200);
 	digitalWrite(in1_l, LOW);
 	digitalWrite(in2_l, HIGH);
 	digitalWrite(in1_r, HIGH);
@@ -33,8 +33,8 @@ void turn_right(){
 }
 
 void drive_backwards(){
-  analogWrite(en_l, 150);
-  analogWrite(en_r, 150);
+  analogWrite(en_l, 185);
+  analogWrite(en_r, 185);
 	digitalWrite(in1_l, HIGH);
 	digitalWrite(in2_l, LOW);
 	digitalWrite(in1_r, HIGH);
@@ -42,8 +42,8 @@ void drive_backwards(){
 }
 
 void drive_forwards(){
-  analogWrite(en_l, 150);
-  analogWrite(en_r, 150);
+  analogWrite(en_l, 185);
+  analogWrite(en_r, 185);
 	digitalWrite(in1_l, LOW);
 	digitalWrite(in2_l, HIGH);
 	digitalWrite(in1_r, LOW);
