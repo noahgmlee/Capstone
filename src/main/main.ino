@@ -212,15 +212,3 @@ void return_from_desk(int desk){
   delay(1000);
   return;
 }
-
-/*test
-void loop() {
-  buttonState = digitalRead(A1);
-  if (buttonState){
-    myServo.write(55);
-  }
-  else {
-    myServo.write(10);
-  }
-}
-*/
